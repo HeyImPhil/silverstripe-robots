@@ -4,3 +4,4 @@ Name: robotconfig
 Silverstripe\Control\Director:
   rules:
     "robots.txt": Heyimphil\Robotson\Controllers\RobotsController
+    "robots": Heyimphil\Robotson\Controllers\RobotsController
