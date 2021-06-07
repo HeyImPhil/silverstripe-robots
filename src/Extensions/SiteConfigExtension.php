@@ -1,9 +1,8 @@
 <?php
 
-
 namespace Heyimphil\Robotson\Extensions;
 
-use Heyimphil\Robotson\Models\RobotRule;
+use Heyimphil\Robotson\Models\RobotRuleSiteConfig;
 use SilverStripe\Forms\CheckboxField;
 use SilverStripe\Forms\CompositeField;
 use SilverStripe\Forms\FieldList;
@@ -21,7 +20,7 @@ class SiteConfigExtension extends DataExtension
     ];
 
     private static $has_many = [
-        'RobotRule' => RobotRule::class,
+        'RobotRule' => RobotRuleSiteConfig::class,
     ];
 
     public function updateCMSFields(FieldList $fields)

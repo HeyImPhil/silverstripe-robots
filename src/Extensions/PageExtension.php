@@ -2,7 +2,7 @@
 
 namespace Heyimphil\Robotson\Extensions;
 
-use Heyimphil\Robotson\Models\RobotRule;
+use Heyimphil\Robotson\Models\RobotRuleSiteTree;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\GridField\GridField;
 use SilverStripe\Forms\GridField\GridFieldConfig_RecordEditor;
@@ -11,7 +11,7 @@ use SilverStripe\ORM\DataExtension;
 class PageExtension extends DataExtension
 {
     private static $has_many = [
-        'RobotRule' => RobotRule::class
+        'RobotRule' => RobotRuleSiteTree::class
     ];
 
     public function updateCMSFields(FieldList $fields)

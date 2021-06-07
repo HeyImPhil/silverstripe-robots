@@ -1,9 +1,9 @@
 <?php
 
-
 namespace Heyimphil\Robotson\Controllers;
 
-use Heyimphil\Robotson\Models\RobotRule;
+use Heyimphil\Robotson\Models\RobotRuleSiteConfig;
+use Heyimphil\Robotson\Models\RobotRuleSiteTree;
 use SilverStripe\Control\Controller;
 use SilverStripe\Control\Director;
 use SilverStripe\ORM\GroupedList;
@@ -40,16 +40,15 @@ class RobotsController extends Controller
 
     public function getRules()
     {
-
         $siteConfig = SiteConfig::current_site_config();
         //Site config rule. If set just use these and ignore SiteTree
-        $rules = RobotRule::get()->filter([
+        $rules = RobotRuleSiteConfig::get()->filter([
             'SiteConfigID:not' => [null, 0],
             'Enabled' => true
         ])->sort('UserAgent');
 
         if (!$rules->exists()) {
-            $rules = RobotRule::get()->filter([
+            $rules = RobotRuleSiteTree::get()->filter([
                 'SiteTreeID:not' => [null, 0],
                 'Enabled' => true
             ])->sort('UserAgent');
@@ -72,15 +71,16 @@ class RobotsController extends Controller
 
     public function getSiteMapURL()
     {
-        $url = '/sitemap.xml';
         $siteConfig = SiteConfig::current_site_config();
         if (!$this->isLive() || !$siteConfig->IncludeSiteMap) {
             return '';
         }
 
-        //get Sitemap
-        $this->extend('updateSiteMapURL', $url);
-        return $url;
+        if ($this->config()->get('site_map_url')) {
+            return $this->config()->get('site_map_url');
+        }
+
+        return '/sitemap.xml';
     }
 
     public function getDisallowed()
