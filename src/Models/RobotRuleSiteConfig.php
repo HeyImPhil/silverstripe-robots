@@ -41,7 +41,7 @@ class RobotRuleSiteConfig extends DataObject
         return $fields;
     }
 
-    public function getLink()
+    public function Link()
     {
         return $this->LinkUrl ?? '/';
     }

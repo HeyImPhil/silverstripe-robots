@@ -13,6 +13,7 @@ class RobotRuleSiteTree extends DataObject
         'Enabled' => 'Boolean(1)',
         'UserAgent' => 'Varchar',
         'IncludeChildren' => 'Boolean',
+        'IncludeQueryString' => 'Boolean(1)',
         'CrawlDelay' => 'Int'
     ];
 
@@ -22,20 +23,15 @@ class RobotRuleSiteTree extends DataObject
 
     private static $summary_fields = [
         'UserAgent',
-        'IncludeChildren'
+        'IncludeChildren',
+        'IncludeQueryString'
     ];
-
-    protected function summaryLink()
-    {
-        return $this->SiteTree()->Link();
-    }
 
     private static $table_name = 'RobotRuleSiteTree';
 
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
-        $fields->removeByName('IncludeChildren');
         $fields->removeByName('SiteTreeID');
         $fields->insertAfter('CrawlDelay',
             LiteralField::create(
@@ -47,7 +43,7 @@ class RobotRuleSiteTree extends DataObject
         return $fields;
     }
 
-    public function getLink()
+    public function Link()
     {
         return $this->SiteTree()->Link();
     }
