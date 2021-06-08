@@ -61,14 +61,14 @@ class RobotsController extends Controller
         }
 
         // each user agent should have a list of arrays which contains the urls it disallows
-        $rules = $this->consilidateRules($rules);
+        $rules = $this->consolidateRules($rules);
 
         $this->extend('updateRules', $rules);
         $this->rules = $rules ?? [];
     }
 
     /** @param RobotRule $rules */
-    public function consilidateRules($rules)
+    public function consolidateRules($rules)
     {
         return GroupedList::create($rules)->groupBy('UserAgent');
     }
