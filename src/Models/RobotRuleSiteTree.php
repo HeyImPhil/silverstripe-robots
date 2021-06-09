@@ -3,9 +3,10 @@
 namespace Heyimphil\Robotson\Models;
 
 use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\Control\Controller;
+use SilverStripe\Control\Director;
 use SilverStripe\Forms\LiteralField;
 use Silverstripe\ORM\DataObject;
-use SilverStripe\SiteConfig\SiteConfig;
 
 class RobotRuleSiteTree extends DataObject
 {
@@ -45,7 +46,8 @@ class RobotRuleSiteTree extends DataObject
 
     public function Link()
     {
-        return $this->SiteTree()->Link();
+        $relativeLink = $this->SiteTree()->RelativeLink();
+        return Controller::join_links(Director::baseURL(), $relativeLink);
     }
 
     public function validate()

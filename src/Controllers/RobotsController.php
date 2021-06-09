@@ -65,6 +65,8 @@ class RobotsController extends Controller
 
         $this->extend('updateRules', $rules);
         $this->rules = $rules ?? [];
+
+        return $rules;
     }
 
     /** @param RobotRule $rules */
@@ -85,28 +87,32 @@ class RobotsController extends Controller
         if ($this->config()->get('site_map_url')) {
             $sitemap = $this->config()->get('site_map_url');
         }
+        $sitemap .= PHP_EOL . PHP_EOL;
 
         return $sitemap;
     }
 
     public function getDisallowed()
     {
+        $robotsTxt = '';
         foreach ($this->rules as $userAgent => $rules) {
             $crawlDelay = 0;
-            echo 'User-agent: '.$userAgent . PHP_EOL;
+            $robotsTxt .= 'User-agent: '.$userAgent . PHP_EOL;
 
             /** @var RobotRule $rule */
             foreach ($rules as $rule) {
-                echo $this->generateDisallowRuleStrings($rule);
+                $robotsTxt .= $this->generateDisallowRuleStrings($rule);
                 if ($rule->CrawlDelay) {
                     $crawlDelay = $rule->CrawlDelay;
                 }
             }
             if ($crawlDelay) {
-                echo 'crawl-delay: '.$crawlDelay . PHP_EOL;
+                $robotsTxt .= 'crawl-delay: '.$crawlDelay . PHP_EOL;
             }
-            echo PHP_EOL;
+            $robotsTxt .= PHP_EOL;
         }
+
+        return $robotsTxt;
     }
 
     /**

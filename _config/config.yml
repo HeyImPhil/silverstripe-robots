@@ -4,4 +4,10 @@ Name: robotconfig
 Silverstripe\Control\Director:
   rules:
     "robots.txt": Heyimphil\Robotson\Controllers\RobotsController
-    "robots": Heyimphil\Robotson\Controllers\RobotsController
+    "robots//$Action": Heyimphil\Robotson\Controllers\RobotsController
+SilverStripe\CMS\Model\SiteTree:
+  extensions:
+  - Heyimphil\Robotson\Extensions\PageExtension
+SilverStripe\SiteConfig\SiteConfig:
+  extensions:
+    - Heyimphil\Robotson\Extensions\SiteConfigExtension

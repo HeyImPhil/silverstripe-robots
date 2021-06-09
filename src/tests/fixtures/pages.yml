@@ -1,0 +1,25 @@
+SilverStripe\SiteConfig\SiteConfig:
+  SiteConfig:
+    IncludeDefaultRules: false
+    IncludeSiteMap: false
+SilverStripe\CMS\Model\SiteTree:
+  ExampleParent:
+    Title: Example Parent Page
+    URLSegment: example-parent
+  ExamplePage:
+    Title: Example Page
+    URLSegment: example-page
+    Parent: =>SilverStripe\CMS\Model\SiteTree.ExampleParent
+Heyimphil\Robotson\Models\RobotRuleSiteTree:
+  ExampleRule:
+    Enabled: true
+    UserAgent: "*"
+    IncludeChildren: true
+    IncludeQueryString: false
+    SiteTree: =>SilverStripe\CMS\Model\SiteTree.ExamplePage
+  ExampleRule2:
+    Enabled: true
+    UserAgent: "googlebot"
+    IncludeChildren: true
+    IncludeQueryString: false
+    SiteTree: =>SilverStripe\CMS\Model\SiteTree.ExamplePage

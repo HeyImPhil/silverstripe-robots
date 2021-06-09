@@ -2,7 +2,6 @@
 
 namespace Heyimphil\Robotson\Models;
 
-use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Forms\LiteralField;
 use Silverstripe\ORM\DataObject;
 use SilverStripe\SiteConfig\SiteConfig;

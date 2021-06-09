@@ -11,7 +11,6 @@ use SilverStripe\Forms\GridField\GridFieldConfig_RecordEditor;
 use SilverStripe\Forms\LiteralField;
 use Silverstripe\ORM\DataExtension;
 
-
 class SiteConfigExtension extends DataExtension
 {
     private static $db = [

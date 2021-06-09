@@ -1,2 +1,2 @@
-<% if $SiteMapURL %>Sitemap: $SiteMapURL<% end_if %>
-$Disallowed
+<% if $SiteMapURL %>Sitemap: $SiteMapURL.RAW<% end_if %>
+$Disallowed.RAW

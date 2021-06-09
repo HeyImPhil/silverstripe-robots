@@ -1,29 +1,76 @@
 # SilverStripe Robots Module
 
-A Module to handle disallowing by user agent and individual pages.
+A Module for configuring the Robots.txt file.
 
 One of the main pain points the client had was keeping a page disallowed after it had moved url. Hence the need to create this module.
 
-The Robot rules can be set at the Site Config level or the page level. If site level config has been set it will ignore page specific config.
+The Robot rules can be set at the Site Config level or the page level.
 
-If we set the Robot rule to include children it will output the url to the page with and without the slash. This means all children currently require it to have the same URL pattern.
-Since we are disallowing individual pages it uses the syntax with a $ at the end which will inform the robots to act that the $ is the end of the string. This unfortunately means we need to also add a line for query strings
-to also be included.
+Note: In non-live environments this will return a disallow all rule.
 
-In all non production environments will return a disallow all rule.
+### Site Config
 
-If the site has a physical file called robots.txt file it will take precendence over this module.
+The site config robot rules should be used to disallow advanced url strings, assets or anything that is not a page.
+
+### Site Tree
+
+One of the main reasons to use the site tree robots settings is that the robot rule will stay disallowed even after the page has been moved to a new URL.
+
+### Options:
+
+#### User-agent:
+
+This is the string and name of the bot to exclude. If all should be excluded use the *
+
+##### Include Children:
+
+If include is turned on it will output the url to the page with and without the slash. This currently requires that the children follow the same url pattern.
+
+Example:
+```text
+User-agent: *
+Disallow: /example/page/
+Disallow: /example/page
+```
+
+If this setting is disabled it will output with a suffix of $ to inform that this is the end of the rule string.
+
+```text
+Example:
+Disallow: /example/page/$
+Disallow: /example/page$
+```
+
+#### Include Query String:
+
+NOTE: This setting is not taken into account if the "Include children" is enabled as by default will include the query strings.
+
+Due to the $ syntax we need to include two lines for the query string.
+```text
+Example:
+Disallow: /example/page/$
+Disallow: /example/page$
+disallow: /tools/knowledge-base/?
+disallow: /tools/knowledge-base?
+```
+
+#### Crawl Delay:
+
+This option will delay the user agents rules and will affect any other rule that also uses the same user agent.
 
 ## Requirements
 
-* Silverstripe/framework ^4.0
-* Silverstripe/admin ^ 1.0
+* Silverstripe/cms ^4.0
 
 ## Installation
 
 ```
 composer require Heyimphil/robotson dev-master
 ```
+## Server requirements
+
+If the site has a physical file called robots.txt file it will take precendence over this module and will need to be handled in the setup of the server.
+
 
 ## Maintainers
  * Phillip King <phillip.king@silverstripe.com>
