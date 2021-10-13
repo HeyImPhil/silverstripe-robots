@@ -1,5 +1,5 @@
 {
-    "name": "Heyimphil/silverstripe-robotson-module",
+    "name": "heyimphil/silverstripe-robotson-module",
     "description": "A robots.txt module for SilverStripe.",
     "type": "silverstripe-vendormodule",
     "keywords": [
