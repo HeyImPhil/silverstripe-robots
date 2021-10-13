@@ -13,8 +13,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Heyimphil\\Robotson\\": "src/",
-            "Heyimphil\\Robotson\\Tests\\": "src/tests"
+            "Heyimphil\\Robotson\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Heyimphil\\Robotson\\Tests\\": "tests/php/"
         }
     }
 }
