@@ -41,7 +41,7 @@ class SiteConfigExtension extends DataExtension
                     CheckboxField::create(
                         'IncludeDefaultRules',
                         'Include Default Rules',
-                        $this->IncludeDefaultRules
+                        $this->owner->IncludeDefaultRules
                     ),
                     LiteralField::create(
                         'DefaultRulesMessage',
@@ -59,7 +59,7 @@ class SiteConfigExtension extends DataExtension
             CheckboxField::create(
                 'IncludeSiteMap',
                 'Include Site Map',
-                $this->IncludeSiteMap
+                $this->owner->IncludeSiteMap
             )
         );
 
