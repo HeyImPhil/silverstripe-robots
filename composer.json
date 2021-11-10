@@ -1,5 +1,5 @@
 {
-    "name": "Heyimphil/silverstripe-robotson-module",
+    "name": "heyimphil/silverstripe-robotson-module",
     "description": "A robots.txt module for SilverStripe.",
     "type": "silverstripe-vendormodule",
     "keywords": [
@@ -13,8 +13,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Heyimphil\\Robotson\\": "src/",
-            "Heyimphil\\Robotson\\Tests\\": "src/tests"
+            "Heyimphil\\Robotson\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Heyimphil\\Robotson\\Tests\\": "tests/php/"
         }
     }
 }
