@@ -41,23 +41,22 @@ class RobotsController extends Controller
 
     public function getRules()
     {
-        $siteConfig = SiteConfig::current_site_config();
         //Site config rule. If set just use these and ignore SiteTree
-        $rules_siteconfig = RobotRuleSiteConfig::get()->filter([
+        $rulesSiteconfig = RobotRuleSiteConfig::get()->filter([
             'Enabled' => true
         ])->sort('UserAgent');
 
-        $rules_sitetree = RobotRuleSiteTree::get()->filter([
+        $rulesSitetree = RobotRuleSiteTree::get()->filter([
             'Enabled' => true
         ])->sort('UserAgent');
 
         $rules = new ArrayList();
-        if ($rules_siteconfig->exists()) {
-            $rules->merge($rules_siteconfig);
+        if ($rulesSiteconfig->exists()) {
+            $rules->merge($rulesSiteconfig);
         }
 
-        if ($rules_sitetree->exists()) {
-            $rules->merge($rules_sitetree);
+        if ($rulesSitetree->exists()) {
+            $rules->merge($rulesSitetree);
         }
 
         // each user agent should have a list of arrays which contains the urls it disallows
@@ -69,7 +68,6 @@ class RobotsController extends Controller
         return $rules;
     }
 
-    /** @param RobotRule $rules */
     public function consolidateRules($rules)
     {
         return GroupedList::create($rules)->groupBy('UserAgent');
@@ -97,9 +95,8 @@ class RobotsController extends Controller
         $robotsTxt = '';
         foreach ($this->rules as $userAgent => $rules) {
             $crawlDelay = 0;
-            $robotsTxt .= 'User-agent: '.$userAgent . PHP_EOL;
+            $robotsTxt .= 'User-agent: ' . $userAgent . PHP_EOL;
 
-            /** @var RobotRule $rule */
             foreach ($rules as $rule) {
                 $robotsTxt .= $this->generateDisallowRuleStrings($rule);
                 if ($rule->CrawlDelay) {
@@ -107,7 +104,7 @@ class RobotsController extends Controller
                 }
             }
             if ($crawlDelay) {
-                $robotsTxt .= 'crawl-delay: '.$crawlDelay . PHP_EOL;
+                $robotsTxt .= 'crawl-delay: ' . $crawlDelay . PHP_EOL;
             }
             $robotsTxt .= PHP_EOL;
         }
@@ -117,8 +114,8 @@ class RobotsController extends Controller
 
     /**
      * Syntax: Add a disallow line for the url with a slash and without.
-     * if we do not want to include the children of this page then we add a $ to the end of each string. Making a total of 4 rules
-     * for one page.
+     * if we do not want to include the children of this page then we add a $ to the end of each string.
+     * Making a total of 4 rules for one page.
      */
     public function generateDisallowRuleStrings($rule)
     {
@@ -128,12 +125,12 @@ class RobotsController extends Controller
             return $this->constructDisallowString($link);
         }
 
-        $suffix =  ($rule->IncludeChildren) ? '' : '$';
+        $suffix = ($rule->IncludeChildren) ? '' : '$';
 
         //Default rule for page
         $disallowRule = $this->constructDisallowString($link, $suffix);
         if ($link != '/') {
-            $disallowRule .= $this->constructDisallowString(rtrim($link,'/'), $suffix);
+            $disallowRule .= $this->constructDisallowString(rtrim($link, '/'), $suffix);
         }
 
         if ($suffix && $rule->IncludeQueryString) {
@@ -141,7 +138,7 @@ class RobotsController extends Controller
             $suffix = '?';
             $disallowRule .= $this->constructDisallowString($link, $suffix);
             if ($link != '/') {
-                $disallowRule .= $this->constructDisallowString(rtrim($link,'/'), $suffix);
+                $disallowRule .= $this->constructDisallowString(rtrim($link, '/'), $suffix);
             }
         }
 

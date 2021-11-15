@@ -11,15 +11,15 @@ use SilverStripe\ORM\DataExtension;
 class PageExtension extends DataExtension
 {
     private static $has_many = [
-        'RobotRule' => RobotRuleSiteTree::class
+        'RobotRules' => RobotRuleSiteTree::class
     ];
 
     public function updateCMSFields(FieldList $fields)
     {
         $fields->addFieldToTab('Root.Robots', GridField::create(
-            'RobotRule',
-            'RobotRule',
-            $this->owner->RobotRule(),
+            'RobotRules',
+            'Robot Rules',
+            $this->owner->RobotRules(),
             GridFieldConfig_RecordEditor::create()
         ));
 

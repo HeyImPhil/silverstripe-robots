@@ -19,48 +19,42 @@ class SiteConfigExtension extends DataExtension
     ];
 
     private static $has_many = [
-        'RobotRule' => RobotRuleSiteConfig::class,
+        'RobotRules' => RobotRuleSiteConfig::class,
     ];
 
     public function updateCMSFields(FieldList $fields)
     {
-        $fields->addFieldToTab(
+        $fields->addFieldsToTab(
             'Root.Robots',
-            GridField::create(
-                'RobotRule',
-                'Robot Rules',
-                $this->owner->RobotRule(),
-                GridFieldConfig_RecordEditor::create()
-            )
-        );
-
-        $fields->addFieldToTab(
-            'Root.Robots',
-            CompositeField::create(
-                array(
-                    CheckboxField::create(
-                        'IncludeDefaultRules',
-                        'Include Default Rules',
-                        $this->owner->IncludeDefaultRules
-                    ),
-                    LiteralField::create(
-                        'DefaultRulesMessage',
-                        sprintf('<div class="message good notice">%s</div>', _t(
-                            __CLASS__ . '.Note',
-                            'Default rules include disallow for /dev /admin.'
-                        ))
-                    )
+            [
+                GridField::create(
+                    'RobotRules',
+                    'Robot Rules',
+                    $this->owner->RobotRules(),
+                    GridFieldConfig_RecordEditor::create()
+                ),
+                CompositeField::create(
+                    [
+                        CheckboxField::create(
+                            'IncludeDefaultRules',
+                            'Include Default Rules',
+                            $this->owner->IncludeDefaultRules
+                        ),
+                        LiteralField::create(
+                            'DefaultRulesMessage',
+                            sprintf('<div class="message good notice">%s</div>', _t(
+                                __CLASS__ . '.Note',
+                                'Default rules include disallow for /dev /admin.'
+                            ))
+                        )
+                    ]
+                ),
+                CheckboxField::create(
+                    'IncludeSiteMap',
+                    'Include Site Map',
+                    $this->owner->IncludeSiteMap
                 )
-            )
-        );
-
-        $fields->addFieldToTab(
-            'Root.Robots',
-            CheckboxField::create(
-                'IncludeSiteMap',
-                'Include Site Map',
-                $this->owner->IncludeSiteMap
-            )
+            ]
         );
 
         return $fields;

@@ -30,10 +30,12 @@ class RobotRuleSiteConfig extends DataObject
     {
         $fields = parent::getCMSFields();
         $fields->removeByName('SiteConfigID');
-        $fields->insertAfter('CrawlDelay',
+        $fields->insertAfter(
+            'CrawlDelay',
             LiteralField::create(
-            'DelayHeader',
-            '<p>If you set a crawl delay to this user agent it will affect all Robot rules that contain this user agent</p>'
+                'DelayHeader',
+                '<p>If you set a crawl delay to this user agent
+                it will affect all Robot rules that contain this user agent</p>'
             )
         );
 
