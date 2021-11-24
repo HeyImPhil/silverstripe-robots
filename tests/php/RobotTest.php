@@ -26,6 +26,11 @@ class RobotTest extends FunctionalTest
         $this->assertEquals(200, $page->getStatusCode());
     }
 
+    /**
+     * Comments:
+     * I think without robots.txt the default is allow all.
+     * Or we should remove this special check for dev environment.
+     */
     public function testEnvironmentDev()
     {
         Injector::inst()->get(Kernel::class)->setEnvironment(CoreKernel::DEV);

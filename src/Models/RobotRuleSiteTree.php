@@ -11,11 +11,13 @@ use Silverstripe\ORM\DataObject;
 class RobotRuleSiteTree extends DataObject
 {
     private static $db = [
+        // I think we should call this DisAllow so that it follows the naming convention of Robots.txt
         'Enabled' => 'Boolean(1)',
         'UserAgent' => 'Varchar',
         'IncludeChildren' => 'Boolean',
         'IncludeQueryString' => 'Boolean(1)',
-        'CrawlDelay' => 'Int'
+        'CrawlDelay' => 'Int',
+        'OriginalLink' => 'Varchar',
     ];
 
     private static $has_one = [
@@ -48,7 +50,8 @@ class RobotRuleSiteTree extends DataObject
 
     public function Link()
     {
-        $relativeLink = $this->SiteTree()->RelativeLink();
+        $relativeLink = $this->OriginalLink ?: $this->SiteTree()->RelativeLink();
+
         return Controller::join_links(Director::baseURL(), $relativeLink);
     }
 
@@ -61,5 +64,19 @@ class RobotRuleSiteTree extends DataObject
         }
 
         return $validate;
+    }
+
+    /**
+     * Make sure OriginalLink gets the value from RelativeLink()
+     *
+     * @inheritDoc
+     */
+    public function onBeforeWrite()
+    {
+        if (!$this->OriginalLink) {
+            $this->OriginalLink = Controller::join_links(Director::baseURL(), $this->SiteTree()->RelativeLink());
+        }
+
+        parent::onBeforeWrite();
     }
 }
