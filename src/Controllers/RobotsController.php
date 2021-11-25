@@ -21,9 +21,10 @@ class RobotsController extends Controller
             'text/plain; charset="utf-8"'
         );
 
-        if (!$this->isLive()) {
-            return $this->renderWith('RobotsDisallowAll');
-        }
+        // This makes manual testing cumbersome since our environment is always set to "dev" locally.
+        //if (!$this->isLive()) {
+        //    return $this->renderWith('RobotsDisallowAll');
+        //}
 
         $this->getRules();
         return $this->renderWith('Robots');
